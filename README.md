@@ -1,37 +1,24 @@
-## Welcome to GitHub Pages
+# Oracle Autonomous Data Warehouse Auto Scaling Workshop
+The purpose of this document is to help setting up the Autonomous data warehouse auto scaling demo on your tenancy. This document covers systematic process to install the demo into any tenancy on oracle cloud.
 
-You can use the [editor on GitHub](https://github.com/srikri12/adw.github.io/edit/master/README.md) to maintain and preview the content for your website in Markdown files.
+Time to Complete
+Approximately 180 minutes.
 
-Whenever you commit to this repository, GitHub Pages will run [Jekyll](https://jekyllrb.com/) to rebuild the pages in your site, from the content in your Markdown files.
+## Getting Started
 
-### Markdown
+### **Step 1**: Acquire an Oracle Cloud Trial Account
 
-Markdown is a lightweight and easy-to-use syntax for styling your writing. It includes conventions for
+- Bookmark this page for future reference.  If you already have an Oracle Cloud account then you can skip this section.
 
-```markdown
-Syntax highlighted code block
+- Please click on the URL to create your <a class=“trial-link”  href="https://myservices.us.oraclecloud.com/mycloud/signup?language=en&sourceType=:ex:tb:::RC_NAMK181017P00031:ADW_IMHOL&SC=:ex:tb:::RC_NAMK181017P00031:ADW_IMHOL&pcode=NAMK181017P00031" target="trial">Free Account</a> and complete all the required steps. When you complete the registration process you'll receive a $300 credit that will enable you to complete the lab for free. Additionally, you'll have 1000s of hours left over to continue to explore the Oracle Cloud.
 
-# Header 1
-## Header 2
-### Header 3
+- Soon after requesting your trial you will receive the following email.
 
-- Bulleted
-- List
+  ![](images/README-25257e61.png)
 
-1. Numbered
-2. List
 
-**Bold** and _Italic_ and `Code` text
+### **Step 2**: Proceed to the Lab Guides
 
-[Link](url) and ![Image](src)
-```
+- Once you are viewing the Workshop's GitHub Pages website, you can see a list of Lab Guides at any time by clicking on the **Menu Icon**
 
-For more details see [GitHub Flavored Markdown](https://guides.github.com/features/mastering-markdown/).
-
-### Jekyll Themes
-
-Your Pages site will use the layout and styles from the Jekyll theme you have selected in your [repository settings](https://github.com/srikri12/adw.github.io/settings). The name of this theme is saved in the Jekyll `_config.yml` configuration file.
-
-### Support or Contact
-
-Having trouble with Pages? Check out our [documentation](https://help.github.com/categories/github-pages-basics/) or [contact support](https://github.com/contact) and we’ll help you sort it out.
+  ![](images/WorkshopMenu.png)
