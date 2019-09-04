@@ -11,6 +11,8 @@ This lab will show you how to setup the Autonomous Data Warehouse and configure 
 
 - ADWCS Provisioning
 
+- Compute instance provisioning
+
 - Auto Scaling Demo Installation
 
 - Manage and Monitor an ADW instance
@@ -141,14 +143,13 @@ Now we will be creating a user with sufficient privileges in the instance and in
       useradd oracle -g oracle
       passwd oracle
       
-* We have to add this user to the *sudoers* group to grant *sudo* privileges to the user.
+* We have to add this user to the *sudoers* group to grant *sudo* privileges to the user. Perform these steps as the *root* user.
 
       chmod u=rw /etc/sudoers
       vi /etc/sudoers
 
   We should now add the user in the list of *sudo* users.
-      
-      Ask Rajesh
+![](./images/sudoers.png)
       
 
 We will now install SQLclient in the compute instance to connect to the Autonomous Database. Download the rpm for the SQLclient.
@@ -157,165 +158,162 @@ We will now install SQLclient in the compute instance to connect to the Autonomo
 and
       
       http://yum.oracle.com/repo/OracleLinux/OL7/oracle/instantclient/getPackage/oracle-instantclient18.3-sqlplus-18.3.0.0.0-3.x86_64.rpm
+      
+
+- Transfer the credentials zip folder you downloaded to the compute instance in a directory of your choice.
+Cahnge the *sqlnet.ora* file to contain the directory where you have the unzipped wallet folder.
+![](./images/sqlnet.png)
+
+- Copy the consumer group of your database from *tnsnames.ora*
+![](./images/tnsnames.png)
+
+- Connect to the database using the SQLclient which you installed earlier with:
+
+      sqlplus username/password@consumer_group
+      
+Upon successful connection to the database, you will see:
+![](./images/sqlplus.png)
 
 
-## APEX and ORDS Installation in Dbaas Instance
-### **STEP 6**: APEX Installation
-   Approximately time 30 Minutes.
-- Login to DbaaS Instance through Putty(To login in putty check Dbaas Provision Step 13 and 14).
-  * Login as opc user.
-  * Change user to oracle  and got to oracle home directory as below screen shot
-- Download "Oracle APEX 18.2 - English language" in local machine and then copy and unzip in oracle home directory(you can use WinSCP to copy from local to cloud instance) [APEX](http://www.oracle.com/technetwork/developer-tools/apex/downloads/index.html)
 
- ![](./images/apex1.png)
 
-- cd to apex directory
-- Start SQL*Plus and ensure you are connecting to your PDB and not to the "root" of the container database (APEX should not be installed at all). Run Below Command to login and Wait until you see sql prompt
-  ```
-  sqlplus / as sysdba
-  alter session set container=pdb1;
-  @apexins sysaux sysaux temp /i/
-  ```
-  ![](./images/apex2.png)
+## ADWC workspace and application creation
 
-- Unlock the APEX_PUBLIC_USER account and set the password.
-  ```
-  alter user apex_public_user identified by BEstrO0ng_#11 account unlock;
-  ```
-- Create the APEX Instance Administration user and set the password (Enter your Email id before run).
-  ```
-  begin
-  apex_util.set_security_group_id( 10 );
-  apex_util.create_user(p_user_name => 'ADMIN',p_email_address =>
-  'Enter your Email id',p_web_password => 'BEstrO0ng_#11',p_developer_privs =>'ADMIN' );
-  apex_util.set_security_group_id( null );
-  commit;
-  end;
-  /
-  ```
-- Run APEX REST configuration, and set the passwords of APEX_REST_PUBLIC_USER and APEX_LISTENER.
-  ```
-  @apex_rest_config_core.sql ./ BEstrO0ng_#11 BEstrO0ng_#11
-  ```
-- Create a network ACE for APEX (this is used when consuming Web services or sending outbound mail).
-  ```
-  declare
-  l_acl_path varchar2(4000);
-  l_apex_schema varchar2(100);
-  begin
-  for c1 in (select schema from sys.dba_registry where comp_id = 'APEX') loop
-  l_apex_schema := c1.schema;
-  end loop;sys.dbms_network_acl_admin.append_host_ace(host => '*',ace => xs$ace_type(privilege_list => xs$name_list('connect'),principal_name => l_apex_schema,principal_type => xs_acl.ptype_db));
-  commit;
-  end;
-  /
-  ```
-- Exit SQL*Plus.
+### **STEP 6**: APEX workspace creation
+- Login to Oracle cloud and access your ADWC instance.
 
-### **STEP 7**: ORDS Installation
+- Click on *Service Console* and the click on the *Development* tab. Select the *Oracle Application Express* option.
 
-- Login to Dbaas Instance through Putty(To login in putty check Dbaas Provision Steps).
-  * Login as opc user.
-  * Change user to oracle  and got to oracle home directory as below screen shot
-  * Create ords directory using below command.
-      ```
-      mkdir ords
-      ```
-- Download "Oracle REST Data Services" in local machine and then copy  and unzip in ords folder in oracle home directory (you can use WinSCP to copy from local to cloud instance) [ORDS](https://www.oracle.com/technetwork/developer-tools/rest-data-services/downloads/index.html)
-  ```
-  unzip ords-18.3.0.270.1456.zip -d /home/oracle/ords/
-  ```
-![](./images/ords1.png)
-- Check access rule in iptables and open port for 80 and 8080.
-  * login as user **opc** and become **root**
-  * Run below command as root to open 80 and 8080 port
-  ```
-  iptables -I INPUT 8 -p tcp -m state --state NEW -m tcp --dport 8080 -j ACCEPT -m comment --comment "Required for    APEX."
-  service iptables save
-  iptables -t nat -I PREROUTING -p tcp --dport 80 -j REDIRECT --to-port 8080
-  service iptables save
-  ```
+![](./images/goApex.png)
 
-  ![](./images/ords2.png)
+- Create a workspace after entering the username and password.
 
-Note:- Please add ingress rule for your VCN to allow from public internet to 8080 and 1521.
+![](./images/createwk.png)
 
-   ![](./images/ords9.png)
 
-- login using **oracle** and cd to the directory where you unzipped ORDS (ensure that ords.war is in your current directory).
 
-  ![](./images/ords3.png)
+## ADWC scaling installation
 
-- Go to params directory and replace the contents of  ords_params.properties as below.
-  ```
-  db.hostname=apexdemo (Get Hostname from your Dbaas Instance)
-  db.port=1521
-  **Note: Change service name for your Dbaas Instance. Run “lsnrctl status” to check for pdb1 and give same as servicename**
-  db.servicename=pdb1.demosubnet1.vcn1.oraclevcn.com
-  db.username=APEX_PUBLIC_USER
-  db.password=BEstrO0ng_#11
-  migrate.apex.rest=false
-  plsql.gateway.add=true
-  rest.services.apex.add=true
-  rest.services.ords.add=true
-  schema.tablespace.default=SYSAUX
-  schema.tablespace.temp=TEMP
-  standalone.mode=TRUE
-  standalone.http.port=8080
-  standalone.use.https=false
-  standalone.static.images=/home/oracle/apex/images
-  user.apex.listener.password=BEstrO0ng_#11
-  user.apex.restpublic.password=BEstrO0ng_#11
-  user.public.password=BEstrO0ng_#11
-  user.tablespace.default=SYSAUX
-  user.tablespace.temp=TEMP
-  ```
-  ![](./images/ords4.png)
-  ![](./images/ords5.png)
+### **STEP 7**: Initializing scripts for demo
 
-- Run the below command ORDS in stand-alone mode.  You'll be prompted for the SYS username and SYS password.kindly use the DBaaS Admin password as set above.
-  ```
-  cd /home/oracle/ords
-  java -Dconfig.dir=/home/oracle/ords -jar ords.war install simple –preserveParamFile
-  ```
-  ![](./images/ords6.png)
+- Transfer the *Dbaas_Pdbuser.sql* file to the compute instance and then connect to the autonomous database as before.
 
-- Kindly exit the session by using ctrl C and create start_ords.sh file in ords folder and put below content
-  ```
-  #!/bin/bash
-  NOW=$(date +"%F_%H:%M")
-  LOGFILE="ords-$NOW.log"
-  echo
-  echo "~~~~~~~~~~~~~~~~">> $LOGFILE
-  echo `date` >> $LOGFILE
-  echo "~~~~~~~~~~~~~~~">> $LOGFILE
-  nohup java -Dconfig.dir=/home/oracle/ords -jar ords.war install simple --preserveParamFile >> $LOGFILE  2>&1  &
-  echo " Check Logfile : $LOGFILE "
-  echo
-  ```
-- Now change the permission and run the script
-  ```
-  chmod 777 start_ords.sh
-  ./start_ords.sh
-  ```
-- Browse below URL to check whether ORDS is up and running.
-  ```
-  http://DbaaS Instance IP address:8080/ords
-  ```
-- Use below credentials to login.
+- Enter the following commands:
 
-  ```
-  Workspace: INTERNAL, Username: ADMIN ,Password: BEstrO0ng_#11
-  ```
-  * The application will ask to change the password kindly choose the password as BEstrO0ng_#22
-#### if the ADMIN password does not work reset password using below step
+      START /home/oracle/Dbaas_Pdbuser.sql;
+This will create the necessary tables for the workspace we created earlier.
 
-  ![](./images/ords7.png)
+- Download ADWCS Demo shell scripts from scripts and copy in oracle home directory.
 
-- Change your working directory to the apex directory where you unzipped the installation software. Login to sqlPlus   and run @apxchpwd. For more information refer Url.[Oracle Community](https://community.oracle.com/thread/2332882?start=0&tstart=0)
-- Click sign In.
+- Open restapi.sh from scripts folder we will need the values for below fields tenancyId, authUserId, keyFingerprint, privateKeyPath. Below are the screen shots to get the value from your environment.
 
-   ![](./images/ords8.png)
+ * Tenancy OCID: Login to cloud environment, Click Services to show the available services. In the list of available services, select Administration ->Tenancy Details.
+
+  ![](./images/demo14.png)
+  ![](./images/demo15.png)
+
+  * Copy Tenancy OCID in notepad.
+  * AuthuserId : Login to cloud environment, Click Services to show the available services. In the list of available services, select Identity -> Users
+
+  ![](./images/demo16.png)
+  ![](./images/demo17.png)
+
+  * Copy admin OCID in notepad as AuthuserId.
+  * Login to Dbaas instance and change user as oracle and run below command to generate public key PEM file.
+   ```
+   mkdir ~/.oci
+   openssl genrsa -out ~/.oci/oci_api_key.pem 2048
+   chmod go-rwx ~/.oci/oci_api_key.pem
+   openssl rsa -pubout -in ~/.oci/oci_api_key.pem -out ~/.oci/oci_api_key_public.pem
+   ```
+  * Open oci_api_key_public.pem file and copy the content
+  * Use copied content to generate finger print for admin user
+  * Click the admin user for which you had taken AuthuserID and then click Add Public Key
+
+   ![](./images/demo18.png)
+
+  * Paste oci_api_key_public.pem content as Public key.
+
+  ![](./images/demo19.png)
+
+  * You can see new finger print as below
+
+  ![](./images/demo20.png)
+
+  * Copy new fingerprint in notepad.
+  * Modify restapi.sh  and change tenancyId, authUserId, keyFingerprint, privateKeyPath(Give these value which we have noted in earlier step )
+
+  ![](./images/demo23.png)
+  
+
+- Next, we have to make some necessary changes in the scripts.
+
+  * Open *adwc.sh*. Replace the existing *username/password@consumernamePrefix* with your equivalent credentials. (NOTE: Do not change the consumer group. Change only consumer group prefix.
+  Eg. *dbconsumer_medium* here *dbconsumer* is the prefix.)
+  
+    Next replace the existing tenancy ocid with your tenancy ocid
+  
+  * Open *adwc_load.sh*. Replace the existing *username/password@consumernamePrefix* with your equivalent credentials. (NOTE: Do not change the consumer group. Change only consumer group prefix.
+  Eg. *dbconsumer_medium* here *dbconsumer* is the prefix.)
+  
+    At the last line in the script, replace the existing path with the path where your scripts folder resides.
+    
+    ![](./images/adwc_load.png)
+    
+  
+  * Open *adwc_load_2.sh*. Replace the existing *username/password@consumernamePrefix* with your equivalent credentials. (NOTE: Do not change the consumer group. Change only consumer group prefix.
+  Eg. *dbconsumer_medium* here *dbconsumer* is the prefix.)
+  
+  * Open *start_adwc.sh*. Replace the existing path with the path where your scripts folder resides and also the DB name beside it.
+  
+  * Open *start_adwc_load.sh*. Replace the existing path with the path where your scripts folder resides and also the DB name beside it.
+
+- Now start below scripts.
+
+      cd /home/oracle/scripts
+      ./start_adwc_load.sh
+      ./ start_adwc.sh
+      
+- Next, login to Application Express as before.
+
+- Click Sign in
+
+   ![](./images/demo27.png)
+
+- Click Manage Workspace and select import.
+
+   ![](./images/demo28.png)
+
+- Download workspace "Apex_Demo_Workspace.sql" file from git [apexdemoscript](https://github.com/cloudsolutionhubs/auto-scale-adwc/tree/master/workshops/auto-scale-adwc/apexdemoscript) in local and give location
+
+- Click next and complete import on default value
+
+- Once you finish you will be able to see in Existing Workspace
+
+  ![](./images/demo29.png)
+
+-  After importing workspace logout and again login with below credential.
+  * **Workspace: pdbuser, Username: APEXDEMO ,Password: apexdemo**
+
+  ![](./images/demo30.png)
+
+-  Click Sign In.
+
+  ![](./images/demo31.png)
+
+-  Click App Builder menu and select import.
+
+  ![](./images/demo32.png)
+
+-  Download application script [apexdemoscript](apexdemoscript/Apex_Demo_Application.sql) in local and give location in Choose file.
+
+-  Click Next and finish application deployment.
+
+-  Once you finish you can run application
+
+  ![](./images/demo33.png)
+
+
 
 ## ADW Scaling APEX Application Installation
 
