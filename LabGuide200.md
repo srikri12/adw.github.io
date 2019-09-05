@@ -67,7 +67,7 @@ Note : Change region name(us-ashburn-1) in above URl
 
    ![](./images/cloud4.PNG)
 
-## ADWCS and DBaaS Provisioning
+## ADWCS and Provisioning
 
 ### **STEP 4**: ADWCS Provisioning
 
@@ -176,10 +176,10 @@ Upon successful connection to the database, you will see:
 
 
 
+## ADW Scaling APEX Application Installation
 
-## ADWC workspace and application creation
+### **STEP 6**: ADWC scaling demo installation
 
-### **STEP 6**: APEX workspace creation
 - Login to Oracle cloud and access your ADWC instance.
 
 - Click on *Service Console* and the click on the *Development* tab. Select the *Oracle Application Express* option.
@@ -189,12 +189,6 @@ Upon successful connection to the database, you will see:
 - Create a workspace after entering the username and password.
 
 ![](./images/createwk.png)
-
-
-
-## ADWC scaling installation
-
-### **STEP 7**: Initializing scripts for demo
 
 - Transfer the *Dbaas_Pdbuser.sql* file to the compute instance and then connect to the autonomous database as before.
 
