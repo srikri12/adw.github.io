@@ -22,8 +22,8 @@ This lab will show you how to setup the Autonomous Data Warehouse and configure 
 ## Notional Architecture and Trial Account access
 
 ### **STEP 1**: Review Notional Architecture
-![](./images/adw_intro.PNG)
-![](./images/notional_arch.PNG)
+![](./images/adw_intro.png)
+![](./images/notional_arch.png)
 
 #### What is an Autonomous Data Warehouse?
 
