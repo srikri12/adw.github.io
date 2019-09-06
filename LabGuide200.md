@@ -122,7 +122,30 @@ This step includes provisioning a compute instance, creating a user with suffici
 
 First we will cover provisioning of a compute instance.
 
-* Login to cloud environment,Click on the Menu Icon to show the available services. In the list of available services, select 'Compute'.
+There are two necessary steps to cover before creating an instance:
+A public-private key pair to authorize access to the instance and a Virtual Cloud Network (VCN) for the instance to reside in.
+
+* First let us create a public-private key for the instance.
+   * Download and install PuttyGen. Open it and create a public-private   key pair as shown. Save the private key and public key.
+  
+  >![](./images/puttygen.png)
+  
+  >![](./images/dbaas7.png)
+  >![](./images/dbaas8.png)
+  >![](./images/dbaas9.png)
+
+* Next we need to create a VCN.
+   * Login to cloud environment and select *Networking* from the menu and follow the steps to create a VCN.
+   
+  >![](./images/dbaas1.png)
+  >![](./images/dbaas2.png)
+  * Click on *Create*
+  >![](./images/dbaas3.png)
+  >![](./images/dbaas4.png)
+  >![](./images/dbaas5.png)
+  
+
+* Now login to cloud environment,Click on the Menu Icon to show the available services. In the list of available services, select 'Compute'.
 
 * In the compute menu, choose a compartment and click on 'Create Instance'.
 
@@ -130,11 +153,35 @@ First we will cover provisioning of a compute instance.
 
 * Create the compute instance by entering the required details.
 
+  * Enter the name of the instance. Keep *Image shape* as Oracle Linux.
+  ![](./images/inst_name.png)
+  
+  * Select the Availability Domain for the instance.
+  ![](./images/inst_AD.png)
+  
+  * Select a shape and the compartment which has a VCN for the instance
+  ![](./images/inst_shape.png)
+  
+  * Paste the ssh public key created before
+  ![](./images/inst_ssh.png)
+  
+  * Click on create button to provision an instance.
+  
+  * Once created, the public IP will be visible on the instance details page. Note down the public IP of your instance.
+  ![](./images/inst_pubip.png)
+
 Now we will be creating a user with sufficient privileges in the instance and installing the SQL client.
 
-* Log in to the instance using Putty with the instance credentials.
-
+* Open Putty and enter the public IP of the compute instance.
 ![](./images/Putty.png)
+
+
+Select *Connection* from the Category section in the left. Select *Auth*. Select the *Private key* from the folder where you saved it earlier. 
+
+
+>![](./images/inst_putty.png)
+
+Now select the *Open* button to log in to the instance.
 
 * Create a user and assign *sudo* privileges as follows:
       
