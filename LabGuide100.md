@@ -14,7 +14,10 @@ This lab will show you how to navigate the Autonomous Data Warehouse auto scalin
 
 ### **STEP 1**: ADW Scaling Demo Navigation
 
-- Open browser and Navigate to http:www.oracledatagroup.com. it will show below landing page
+- Open browser and Navigate to http:www.oracledatagroup.com. Scroll down and select *Auto scaling*.
+![](./images/lab100.png)
+
+- it will show below landing page
 
 ![](./images/scale2.png)
 

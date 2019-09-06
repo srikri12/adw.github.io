@@ -22,8 +22,8 @@ This lab will show you how to setup the Autonomous Data Warehouse and configure 
 ## Notional Architecture and Trial Account access
 
 ### **STEP 1**: Review Notional Architecture
-![](./images/1.PNG)
-![](./images/Notional_Architecure.PNG)
+![](./images/adw_intro.PNG)
+![](./images/notional_arch.PNG)
 
 #### What is an Autonomous Data Warehouse?
 
@@ -38,17 +38,7 @@ Oracle’s Autonomous Data Warehouse is the perfect quick-start service for fast
 Read on to begin your Getting Started journey with Oracle Autonomous Data Warehouse.
 
 
-### **STEP 2**: Lab Prerequisites – Required Software
-- Oracle APEX Release 18.2.0.00.12
-- Oracle REST Data Services 18.4
-
-<a href="https://cloudcustomerconnect.oracle.com/resources/32a53f8587/summary" target="blank">**Cloud Customer Connect**</a> Forum for Autonomous Data Warehouse
-If you have a question during this workshop then use the Autonomous Data Warehouse Forum to post questions, connect with experts, and share your thoughts and ideas about Oracle Autonomous Data Warehouse.
-
-Are you are completely new to the <a href="https://cloudcustomerconnect.oracle.com/resources/32a53f8587/summary" target="blank">**Cloud Customer Connect**</a> forums? Visit our  <a href="https://cloudcustomerconnect.oracle.com/pages/1f00b02b84" target="blank">Getting Started forum page</a> to learn how to best leverage community resources.
-
-
-### **STEP 3**: Access the Cloud
+### **STEP 2**: Access the Cloud
 
 - Navigate to https://console.us-ashburn-1.oraclecloud.com
 Note : Change region name(us-ashburn-1) in above URl
@@ -69,7 +59,7 @@ Note : Change region name(us-ashburn-1) in above URl
 
 ## ADWCS and Provisioning
 
-### **STEP 4**: ADWCS Provisioning
+### **STEP 3**: ADWCS Provisioning
 
 - Login to cloud environment,Click on the Menu Icon to show the available services. In the list of available services, select Autonomous Data Warehouse.
 
@@ -117,7 +107,7 @@ Note : Change region name(us-ashburn-1) in above URl
 -	Click Test.
 Status: Success displays at the left-most bottom of the New/Select Database Connection dialog.
 
-### **STEP 5**: Compute instance Provisioning
+### **STEP 4**: Compute instance Provisioning
 This step includes provisioning a compute instance, creating a user with sufficient access privileges and installing the SQLclient (to connect to the Autonomous Database).
 
 First we will cover provisioning of a compute instance.
@@ -225,7 +215,7 @@ Upon successful connection to the database, you will see:
 
 ## ADW Scaling APEX Application Installation
 
-### **STEP 6**: ADWC scaling demo installation
+### **STEP 5**: ADWC scaling demo installation
 
 - Login to Oracle cloud and access your ADWC instance.
 
