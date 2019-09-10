@@ -282,22 +282,35 @@ This will create the necessary tables for the workspace we created earlier.
   * Open *adwc.sh*. Replace the existing *username/password@consumernamePrefix* with your equivalent credentials. (NOTE: Do not change the consumer group. Change only consumer group prefix.
   Eg. *dbconsumer_medium* here *dbconsumer* is the prefix.)
   
-    Next replace the existing tenancy ocid with your tenancy ocid
+  ![](./images/adwc_sh.png)
   
-  * Open *adwc_load.sh*. Replace the existing *username/password@consumernamePrefix* with your equivalent credentials. (NOTE: Do not change the consumer group. Change only consumer group prefix.
+    Next replace the existing tenancy ocid with your tenancy ocid
+  ![](./images/adwc_sh_ocid.png)
+  
+  * Open *adwc_load.sh*. Replace all existing *username/password@consumernamePrefix* with your equivalent credentials. (NOTE: Do not change the consumer group. Change only consumer group prefix.
   Eg. *dbconsumer_medium* here *dbconsumer* is the prefix.)
+  
+  ![](./images/adwc_load_sh.png)
   
     At the last line in the script, replace the existing path with the path where your scripts folder resides.
     
     ![](./images/adwc_load.png)
     
   
-  * Open *adwc_load_2.sh*. Replace the existing *username/password@consumernamePrefix* with your equivalent credentials. (NOTE: Do not change the consumer group. Change only consumer group prefix.
+  * Open *apex_load_2.sh*. Replace all existing *username/password@consumernamePrefix* with your equivalent credentials. (NOTE: Do not change the consumer group. Change only consumer group prefix.
   Eg. *dbconsumer_medium* here *dbconsumer* is the prefix.)
   
+  ![](./images/adwc_load_sh.png)
+  
+  
+  
   * Open *start_adwc.sh*. Replace the existing path with the path where your scripts folder resides and also the DB name beside it.
+
+  ![](./images/start_adwc_sh.png)
   
   * Open *start_adwc_load.sh*. Replace the existing path with the path where your scripts folder resides and also the DB name beside it.
+
+  ![](./images/start_adwc_load_sh.png)
 
 - Now start below scripts.
 
@@ -306,27 +319,6 @@ This will create the necessary tables for the workspace we created earlier.
       ./ start_adwc.sh
       
 - Next, login to Application Express as before.
-
-- Click Sign in
-
-   ![](./images/demo27.png)
-
-- Click Manage Workspace and select import.
-
-   ![](./images/demo28.png)
-
-- Download workspace "Apex_Demo_Workspace.sql" file from git [apexdemoscript](https://github.com/cloudsolutionhubs/auto-scale-adwc/tree/master/workshops/auto-scale-adwc/apexdemoscript) in local and give location
-
-- Click next and complete import on default value
-
-- Once you finish you will be able to see in Existing Workspace
-
-  ![](./images/demo29.png)
-
--  After importing workspace logout and again login with below credential.
-  * **Workspace: pdbuser, Username: APEXDEMO ,Password: apexdemo**
-
-  ![](./images/demo30.png)
 
 -  Click Sign In.
 
