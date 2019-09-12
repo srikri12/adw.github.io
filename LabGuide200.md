@@ -173,7 +173,7 @@ Select *Connection* from the Category section in the left. Select *Auth*. Select
 
 Now select the *Open* button to log in to the instance.
 
-* Create a user and assign *sudo* privileges as follows:
+* Create a user *oracle* and assign *sudo* privileges as follows:
       
       sudo su -
       groupadd oracle
@@ -196,8 +196,9 @@ and
       
       http://yum.oracle.com/repo/OracleLinux/OL7/oracle/instantclient/getPackage/oracle-instantclient18.3-sqlplus-18.3.0.0.0-3.x86_64.rpm
       
+- Now as the *oracle* user, declare a global variable in *bash_profile* file called *TNS_ADMIN* pointing to the wallet location.
 
-- Transfer the credentials zip folder you downloaded to the compute instance in a directory of your choice.
+- Next ransfer the credentials zip folder you downloaded to the compute instance in a directory of your choice.
 Cahnge the *sqlnet.ora* file to contain the directory where you have the unzipped wallet folder.
 ![](./images/sqlnet.png)
 
