@@ -198,7 +198,7 @@ and
       
 - Now as the *oracle* user, declare a global variable in *bash_profile* file called *TNS_ADMIN* pointing to the wallet location.
 
-- Next ransfer the credentials zip folder you downloaded to the compute instance in a directory of your choice.
+- Next transfer the credentials zip folder you downloaded to the compute instance in a directory of your choice.
 Cahnge the *sqlnet.ora* file to contain the directory where you have the unzipped wallet folder.
 ![](./images/sqlnet.png)
 
